@@ -2,6 +2,7 @@ const express = require("express");
 const {engine} = require('express-handlebars');
 const { sequelize } = require("./models");
 const {stationRoute} = require('../src/routers/station.router')
+const {companiesRoute } = require('../src/routers/companies.router')
 const app = express();
 
 
@@ -13,9 +14,8 @@ app.set('views', './src/views');
 
 app.use('/api/v1', stationRoute)
 
-app.get('/',(req,res) => {
-  res.render('index', {layout : false})
-})
+app.use('/api/v1', companiesRoute)
+
 
 app.listen(3000, async () => {
   console.log("App listening on http://localhost:3000");
