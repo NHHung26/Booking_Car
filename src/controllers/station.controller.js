@@ -6,8 +6,8 @@ const createStation = async (req, res) => {
 }
 
 const getAllStation = async (req,res) => {
-    const {name, address, province} = req.body;
-    const station =  await Station.findAll({name, address, province});
+    
+    const station =  await Station.findAll();
     if(station){
         res.status(200).send(station)
     }else{

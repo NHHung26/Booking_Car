@@ -10,11 +10,11 @@ const createCompanies = async (req, res) => {
     }
 }
 
-const allCompanies = async (req, res) => {
-    const {name, image} = req.body;
-    const allCompanies = await Companies.findAll({name, image})
-    if(allCompanies) {
-        res.status(200).send(allCompanies)
+const getAllCompanies = async (req, res) => {
+    
+    const getAllCompanies = await Companies.findAll()
+    if(getAllCompanies) {
+        res.status(200).send(getAllCompanies)
     }else{
         res.status(500).send("false")
     }
@@ -65,7 +65,7 @@ const deleteCompanies = async (req, res) => {
 
 module.exports = {
     createCompanies,
-    allCompanies,
+    getAllCompanies,
     getInfoDetailCompanies,
     updateCompanies,
     deleteCompanies
