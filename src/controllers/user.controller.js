@@ -1,8 +1,11 @@
-const {User} = require('../models');
+const {User} = require('../models')
+const bcrypt = require('bcrypt')
 
-const createUser = async (req, res) => {
-    const {name, email, numberPhone, password, role} = req.body;
-    const createUser = await User.create({name, email, numberPhone, password, role})
+const register = async (req, res) => {
+    const {name, email, numberPhone, password, role} = req.body
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt)
+    const createUser = await User.create({name, email, numberPhone, password: hashPassword})
     if(createUser) {
         res.status(201).send(createUser);
     }else {
@@ -66,7 +69,7 @@ const deleteUserById = async (req, res) => {
 }
 
 module.exports = {
-    createUser,
+    register,
     getInfoUserById,
     getAllUser,
     updateUserById,

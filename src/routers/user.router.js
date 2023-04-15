@@ -1,17 +1,19 @@
 const express = require('express')
-const {createUser, getInfoUserById,  getAllUser, updateUserById, deleteUserById} = require('../controllers/user.controller')
+const {register, getInfoUserById,  getAllUser, updateUserById, deleteUserById} = require('../controllers/user.controller');
+const { checkExist } = require('../middlewares/validatetions/checkExist');
+const {User} = require('../models')
 
 const userRoute = express.Router();
 
-userRoute.post('/user',createUser)
+userRoute.post('/user',register)
 
 userRoute.get('/user/:id',getInfoUserById)
 
 userRoute.get('/user',getAllUser)
 
-userRoute.put('/user/:id',updateUserById)
+userRoute.put('/user/:id',checkExist(User),updateUserById)
 
-userRoute.delete('/user/:id',deleteUserById)
+userRoute.delete('/user/:id',checkExist(User),deleteUserById)
 
 module.exports = {
     userRoute
