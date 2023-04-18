@@ -17,24 +17,27 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isEmail: true,
+        },
       },
       numberPhone: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       role: {
         type: DataTypes.STRING,
-        defaultValue: "Client"
+        defaultValue: "Client",
       },
     },
     {
       sequelize,
       modelName: "User",
-      timestamps: false
+      timestamps: false,
     }
   );
   return User;

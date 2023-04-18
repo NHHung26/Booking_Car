@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       province: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
     },
     {
       sequelize,
       modelName: "Station",
-      timestamps: false
+      timestamps: false,
     }
   );
   return Station;

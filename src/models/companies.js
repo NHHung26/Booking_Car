@@ -18,12 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      
     },
     {
       sequelize,
       modelName: "Companies",
-      timestamps: false
+      timestamps: false,
     }
   );
   return Companies;

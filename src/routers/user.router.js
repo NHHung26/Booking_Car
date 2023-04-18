@@ -1,20 +1,28 @@
-const express = require('express')
-const {register, getInfoUserById,  getAllUser, updateUserById, deleteUserById} = require('../controllers/user.controller');
-const { checkExist } = require('../middlewares/validatetions/checkExist');
-const {User} = require('../models')
+const express = require("express");
+const {
+  register,
+  getInfoUserById,
+  getAllUser,
+  updateUserById,
+  deleteUserById,
+  loggin,
+} = require("../controllers/user.controller");
+const { checkExist } = require("../middlewares/validatetions/checkExist");
+const { User } = require("../models");
 
 const userRoute = express.Router();
 
-userRoute.post('/user',register)
+userRoute.post("/register", register);
 
-userRoute.get('/user/:id',getInfoUserById)
+userRoute.get("/:id", getInfoUserById);
 
-userRoute.get('/user',getAllUser)
+userRoute.get("/", getAllUser);
 
-userRoute.put('/user/:id',checkExist(User),updateUserById)
+userRoute.put("/:id", checkExist(User), updateUserById);
 
-userRoute.delete('/user/:id',checkExist(User),deleteUserById)
+userRoute.delete("/:id", checkExist(User), deleteUserById);
 
+userRoute.post("/loggin", loggin);
 module.exports = {
-    userRoute
-}
+  userRoute,
+};
