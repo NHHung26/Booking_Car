@@ -38,13 +38,25 @@ userRoute.delete(
 );
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./src/public.image");
+    cb(null, "./src/public/image");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    const extensionImageLIst = [".png", ".jpg"];
+    const extension = file.originalname.slice(-4);
+    const check = extensionImageLIst.includes(extension);
+    if (check) {
+      cb(null, true);
+    } else {
+      cb(new Error("extension không hợp lệ"));
+    }
+  },
+});
 userRoute.post("/upload-image", upload.single("avatar"), (req, res) => {
   res.send(200).send("tính năng file upload run");
 });
