@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
+const { create } = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
@@ -11,11 +12,12 @@ const register = async (req, res) => {
     email,
     numberPhone,
     password: hashPassword,
+    role,
   });
   if (createUser) {
     res.status(201).send(createUser);
   } else {
-    res.status(500).send("create False!!");
+    res.status(500).send("Tạo thất bại");
   }
 };
 
@@ -78,24 +80,26 @@ const deleteUserById = async (req, res) => {
 
 const loggin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({
+  const loggin = await User.findOne({
     where: {
       email,
     },
   });
-  if (user) {
-    const isAuth = bcrypt.compareSync(password, user.password);
+  if (loggin) {
+    const isAuth = bcrypt.compareSync(password, loggin.password);
     console.log(isAuth);
     if (isAuth) {
-      const token = jwt.sign({ email, role: user.role }, "huyhung26082002", {
-        expiresIn: 60 * 60,
+      const token = jwt.sign({ email, role: loggin.role }, "huyhung26082002", {
+        expiresIn: "1h",
       });
-      res.status(200).send({ Message: "Đăng nhập thành công", token: token });
+      res.status(200).send({ message: "đăng nhập thành công", token: token });
     } else {
-      res.status(500).send({ Message: "Tài khoảng hoặc mật khẩu không đúng" });
+      res
+        .status(500)
+        .send({ message: "sai tên đăng nhập hoặc mật khẩu", token: token });
     }
   } else {
-    res.status(404).send({ Message: "Không tìm thấy email phù hợp" });
+    res.status(404).send({ message: "email không tồn tại" });
   }
 };
 module.exports = {

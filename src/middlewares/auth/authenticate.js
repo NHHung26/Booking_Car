@@ -1,4 +1,3 @@
-const e = require("express");
 const jwt = require("jsonwebtoken");
 const authencation = (req, res, next) => {
   try {
@@ -6,13 +5,12 @@ const authencation = (req, res, next) => {
     const decode = jwt.verify(token, "huyhung26082002");
     console.log(decode);
     if (decode) {
-      return next();
+      req.user = decode;
+      next();
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = {
-  authencation,
-};
+module.exports = authencation;
